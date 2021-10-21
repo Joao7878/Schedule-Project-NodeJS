@@ -15,4 +15,9 @@ route.get("/login/logout", loginController.logout);
 
 //Rotas de Contato
 route.get("/contact/index", loginRequired, contactController.index);
+route.post("/contact/register", loginRequired, contactController.register);
+route.get("/contact/index/:id", loginRequired, contactController.editIndex);
+//O html ainda não tem o método put e delete
+route.post("/contact/edit/:id", loginRequired, contactController.edit);
+route.get("/contact/delete/:id", loginRequired, contactController.delete);
 module.exports = route;

@@ -1,4 +1,5 @@
-exports.homePage = (req, res, next) => {
+const Contact = require("../models/contactModel");
+exports.homePage = async (req, res, next) => {
   if (req.session.page_views) {
     req.session.page_views++;
     req.flash("info", `Welcome back  `);
@@ -7,10 +8,10 @@ exports.homePage = (req, res, next) => {
     req.session.page_views = 1;
     req.flash("info", `Welcome `);
   }
-  res.render("index");
-};
-
-exports.erro = (req, res, next) => {
-  res.render("404");
-  next();
+  if (req.session.user) {
+    const contact = new Contact(req.body, req.session.user._id);
+    const contacts = await contact.searchContacts();
+    return res.render("index", { contacts });
+  }
+  return res.render("index");
 };

@@ -7,7 +7,37 @@
             <h1 class="display-1 text-center">Schedule</h1>
             <p class="text-center lead"> Your contacts are below!</p>
             <%- include('include/messages.ejs') %>
-
+            <% if (user) { %>
+            <% if(contacts.length > 0 ) { %>
+            <div class="responsive-table">
+                <table class="table my-3">
+                    <% var bool = true %>
+                    <% contacts.forEach(contact => { %>
+                    <% if (contact.createdBy === user._id) { %>
+                    <tr>
+                        <td><%= contact.name %></td>
+                        <td><%= contact.lastName %></td>
+                        <td><%= contact.number %></td>
+                        <td><%= contact.email %></td>
+                        <td><a href="/contact/index/<%= contact._id %>  "><button type="submit"
+                                    class="btn btn-primary">Edit</button></a></td>
+                        <td><a href="/contact/delete/<%= contact._id %>  "><button type="submit"
+                                    class="btn btn-primary">Delete</button></a></td>
+                        <% bool = false %>
+                    </tr>
+                    <% }%>
+                    <% }); %>
+                    <% if (bool) { %>
+                    <p class="text-center lead">You don't have contacts</p>
+                    <% } %>
+                </table>
+            </div>
+            <% } else { %>
+            <p class="text-center lead">You don't have contacts</p>
+            <% } %>
+            <% } else { %>
+            <p class="text-center lead">You need to login first</p>
+            <% } %>
         </div>
         <div class="col-lg-2"></div>
     </div>

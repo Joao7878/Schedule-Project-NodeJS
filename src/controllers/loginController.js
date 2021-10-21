@@ -29,7 +29,6 @@ exports.register = async (req, res) => {
       return res.redirect("back");
     });
   } catch (err) {
-    console.log(err);
     //Iremos retornar para finalizar e renderizar
     return res.render("404");
   }
